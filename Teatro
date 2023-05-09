@@ -1,0 +1,51 @@
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class Teatro {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int numButacas;
+        do {
+            System.out.print("Introduce el número de butacas del teatro (entre 2 y 50): ");
+            while (!sc.hasNextInt()) {
+                System.out.print("Entrada inválida. Introduce un número entre 2 y 50: ");
+                sc.next();
+            }
+            numButacas = sc.nextInt();
+        } while (numButacas < 2 || numButacas > 50);
+        
+        double[][] butacas = new double[numButacas][];
+        int numColumnas = 4;
+        for (int i = 0; i < numButacas; i++) {
+            butacas[i] = new double[numColumnas];
+            numColumnas += 2;
+        }
+        
+        System.out.println("Estructura del teatro:");
+        System.out.println(Arrays.deepToString(butacas));
+        
+        int numFilas = butacas.length;
+        for (int i = 0; i < numFilas; i++) {
+            int numButacasFila = butacas[i].length;
+            double precioBase = 10.50;
+            double precioExtremos = 10.00;
+            double incrementoPrecio = 0.50;
+            for (int j = 0; j < numButacasFila; j++) {
+                if (j == 0 || j == numButacasFila - 1) {
+                    butacas[i][j] = precioExtremos;
+                } else {
+                    butacas[i][j] = precioBase;
+                    precioBase += incrementoPrecio;
+                }
+            }
+        }
+        
+        System.out.println("Estructura y precios de las butacas:");
+        for (int i = numFilas - 1; i >= 0; i--) {
+            for (int j = 0; j < butacas[i].length; j++) {
+                System.out.printf("%.2f ", butacas[i][j]);
+            }
+            System.out.println();
+        }
+    }
+}
